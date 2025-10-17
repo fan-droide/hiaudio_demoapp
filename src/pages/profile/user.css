@@ -1,0 +1,75 @@
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_profile_card */
+.profile-card {
+    padding:8pt;   
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.apicard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    padding: 2em;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.curlcode {
+    display:block;
+    padding: 30px;
+    background-color: #eee;
+}
+
+.user-title {
+    color: grey;
+    font-size: 18px;
+}
+
+.button-profile {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;    
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+.logout {   
+    background-color: #000;    
+}
+
+.social-link {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+
+.button-profile:hover,
+.social-link:hover {
+    opacity: 0.7;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.hidden-first {
+    visibility: hidden;
+    animation: 5s fadeIn;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        visibility: visible;
+        opacity: 1;
+    }
+}

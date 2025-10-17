@@ -1,0 +1,485 @@
+<!-- https://github.com/naomiaro/waveform-playlist/blob/master/dist/waveform-playlist/web-audio-editor.html -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>hi-audio</title>
+    <meta name="description" content="hi-audio">
+    <link rel="icon" type="image/x-icon" href="common/img/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/d6bd427cae.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./common/css/loader.css">
+    <link rel="stylesheet" href="./common/css/footer.css">
+    <link rel="stylesheet" href="./common/css/fabutton.css">
+    <link rel="stylesheet" href="./common/css/badge.css">
+    <link rel="stylesheet" href="pages/composition/styles/playlist.css">
+    <link rel="stylesheet" href="pages/composition/styles/customControls.css">
+    <link rel="stylesheet" href="pages/composition/styles/settings.css">
+    <link rel="stylesheet" href="pages/composition/styles/webdictaphone.css">
+    <link rel="stylesheet" href="pages/composition/styles/metronome.css">
+</head>
+
+<body>
+
+    <header id="page-header" class="navbar navbar-expand-sm navbar-light bg-light">
+        <a id="goHome" class="navbar-brand" href="">
+            <img id="mainLogo" alt="" height="36" src="https://hi-audio.imt.fr/wp-content/themes/tpt-hiaudio/assets/images/hi_audio.svg">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul id="useroptions" class="navbar-nav mr-auto"></ul>
+            <div id="btn-clone-container" class="my-2 my-lg-0" hidden>
+                <button id="btn-clone-comp" class="btn btn-outline-success my-2 my-sm-0">Clone</button>
+            </div>
+        </div>
+    </header>
+    <main class="container editor-container">
+        <div class="modal fade" id="cloneMusicModal" tabindex="-1" aria-labelledby="cloneMusicModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cloneMusicModalLabel">Clone Composition</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="clonetitle">Title:</label>
+                            <div class="container">
+                                <div class="row justify-center">
+                                    <div class="form-outline w-75">
+                                        <input class="form-control" type="text" id="clonetitle" placeholder="new title" title="clonetitle">
+                                        <div id="validationclonedtitle" class="mt-3 invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="clonedescription">Description:</label>
+                            <div class="container">
+                                <div class="row justify-center">
+                                    <div class="input-group">
+                                        <textarea class="form-control" id="clonedescription" rows="2" placeholder="new description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cloneMusicFormControl">Level of Privacy:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cloneMusicPrivacyRadios" id="cloneMusicPrivacyRadios1" value="1" checked>
+                                <label class="form-check-label" for="cloneMusicPrivacyRadios1">
+                                  Public
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cloneMusicPrivacyRadios" id="cloneMusicPrivacyRadios2" value="2">
+                                <label class="form-check-label" for="cloneMusicPrivacyRadios2">
+                                  Only registered users
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cloneMusicPrivacyRadios" id="cloneMusicPrivacyRadios3" value="3">
+                                <label class="form-check-label" for="cloneMusicPrivacyRadios3">
+                                  Private
+                                </label>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button id="clonecreationbtn" type="button" class="btn btn-primary">Clone</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="settingsModalLabel">Composition Info</h5>
+                        <button id="closesettingsmodalbutton" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="newtitle">Title:</label> 
+                            <div class="container">
+                                <div class="row justify-center">
+                                    <div class="form-outline w-75">   
+                                        <input type="text" class="form-control" id="newtitle" placeholder="" title="newtitle">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newdescription">Description:</label> 
+                            <div class="container">
+                                <div class="row justify-center">
+                                    <div class="input-group">
+                                        <textarea  class="form-control" id="newdescription" rows="2" placeholder=""></textarea>                                        
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label id="" for="listCollectionsFormControl">Parent collection:</label>                            
+                            <div class="container">
+                                <div class="row justify-center">
+                                  <div class="">                                  
+                                    <div id="listCollContainerNewColl" class="input-group mb-3"></div>                                                         
+                                  </div>                         
+                                </div>
+                              </div>                            
+                        </div>
+                        <div class="form-group">
+                            <label for="settingsFormControl">Level of Privacy:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="settingsPrivacyRadios"
+                                    id="settingsPrivacyRadios1" value="1" checked>
+                                <label class="form-check-label" for="settingsPrivacyRadios1">
+                                    Public
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="settingsPrivacyRadios"
+                                    id="settingsPrivacyRadios2" value="2">
+                                <label class="form-check-label" for="settingsPrivacyRadios2">
+                                    Only registered users
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="settingsPrivacyRadios"
+                                    id="settingsPrivacyRadios3" value="3">
+                                <label class="form-check-label" for="settingsPrivacyRadios3">
+                                    Private
+                                </label>
+                            </div>
+                        </div>
+                        <div id="form-group-marktemplate" class="form-group" hidden>                            
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="markastemplatebtn">
+                                <label class="custom-control-label" for="markastemplatebtn">Mark as template</label>
+                            </div>
+                        </div>
+                        <div class="form-group">                            
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="opentocontribution">
+                                <label class="custom-control-label" for="opentocontribution">Allow any registered user to contribute</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label id="" for="listContributorsFormControl">Add specific contributor with a role:</label>                            
+                            <div class="container">
+                                <div class="row justify-center">
+                                  <div class="col-12">                                  
+                                    <div class="input-group mb-3">
+                                      <input id="contributorinput" type="text" class="form-control" placeholder="add user by email" aria-label="Add an item" aria-describedby="basic-addon2">                                      
+                                      <select class="custom-select" id="inputGroupSelectRole">
+                                        <option value="0">Role...</option>
+                                        <option value="1">Owner</option>
+                                        <option value="2">Admin</option>
+                                        <option value="3" selected>Member</option>
+                                        <option value="4">Guest</option>
+                                      </select>
+                                      <div class="input-group-append">
+                                        <button class="btn btn-outline-info" id="addContribButton" type="button">Add</button>
+                                      </div>
+                                      <div id="validationemailresult" class="mt-3 invalid-feedback"></div>
+                                    </div>                            
+                                  </div>
+                                  <div class="col-12">
+                                    <ul id="listOfContributors" class="list-group"></ul>                               
+                                  </div>
+                                </div>
+                              </div>                            
+                        </div>
+                        <div id="deleteCompositionFormGroup" class="form-group" hidden>                            
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="deleteComposition">
+                                <label class="custom-control-label" for="deleteComposition">Delete composition</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelsettingsbutton" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button id="updatecompositionbutton" type="button" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="trackInfoModal" tabindex="-1" aria-labelledby="trackInfoModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header text-center border-0">
+                        <button id="edittrackinfobutton" type="button" class="btn btn-primary">Edit</button>
+                        <h5 class="modal-title w-100" id="trackInfoModalLabel">Track info</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item active" role="presentation">
+                                <button class="nav-link active" id="annotations-table-tab" data-toggle="tab" data-target="#annotations-table" type="button" role="tab" aria-controls="annotations-table" aria-selected="true">Annotations</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="metadata-table-tab" data-toggle="tab" data-target="#metadata-table" type="button" role="tab" aria-controls="metadata-table" aria-selected="false">Metadata</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="annotations-table" class="tab-pane active" role="tabpanel" aria-labelledby="annotations-table-tab">
+                                <table class="table trackinfo-table table-bordered">
+                                    <caption></caption>
+                                    <tbody id="trackinfotablebody">
+                                        <th scope="col"></th>                    
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div id="audio-pending-analysis" class="analysispending alert alert-info col-md-6" role="alert">
+                                            <i class="fa fa-hourglass-half"></i>
+                                            &nbsp;Audio pending of analysis
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button id="btn-add-new-annot" type="button" class="btn btn-outline-info float-right">Add New</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="metadata-table" class="tab-pane fade" role="tabpanel" aria-labelledby="metadata-table-tab">
+                                <table class="table trackinfo-table table-bordered">
+                                    <caption></caption>
+                                    <tbody id="metadatatablebody">
+                                        <th scope="col"></th>                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="trackinfo-modal-footer" class="modal-footer">
+                        <button id="canceltrackinfobutton" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button id="updatetrackinfobutton" type="button" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper">
+            <article class="post">
+                <header id="post-header" class="post-header">
+                    <p class="lead"></p>
+                </header>
+                <div id="download-progress-elems" class="download-progress-elems" hidden>
+                    Downloading: &nbsp;<span id="download-percentage">0%</span><br>
+                    <progress id="download-progress-bar"></progress>
+                </div>
+                <div class="post-content">
+                    <div class="sound-status"></div>
+                    <form class="form-inline hidden-first">
+                        <label for="master-gain" class="mr-sm-2">Master Volume</label>
+                        <input type="range" min="0" max="100" value="100" class="master-gain form-control mr-sm-2"
+                            id="master-gain" />
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input automatic-scroll" type="checkbox" id="automatic_scroll"
+                                checked />
+                            <label class="form-check-label" for="automatic_scroll">Automatic Scroll</label>
+                        </div>
+                    </form>
+                    <div id="top-bar" class="playlist-top-bar">
+                        <div class="playlist-toolbar hidden-first">
+                            <div class="btn-group">
+                                <button type="button" class="btn-pause btn btn-outline-warning" title="Pause">
+                                    <i class="fas fa-pause"></i>
+                                </button>
+                                <button type="button" class="btn-play btn btn-outline-success" title="Play">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <button type="button" class="btn-stop btn btn-outline-danger" title="Stop">
+                                    <i class="fas fa-stop"></i>
+                                </button>
+                                <button type="button" class="btn-rewind btn btn-outline-success" title="Rewind">
+                                    <i class="fas fa-fast-backward"></i>
+                                </button>
+                                <button type="button" class="btn-fast-forward btn btn-outline-success"
+                                    title="Fast forward">
+                                    <i class="fas fa-fast-forward"></i>
+                                </button>
+                                <button type="button" class="btn-record btn btn-outline-primary disabled"
+                                    title="Record">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" title="Zoom in" class="btn-zoom-in btn btn-outline-dark">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                                <button type="button" title="Zoom out" class="btn-zoom-out btn btn-outline-dark">
+                                    <i class="fas fa-search-minus"></i>
+                                </button>
+                            </div>
+                            <div class="btn-group btn-playlist-state-group">
+                                <button type="button" class="btn-cursor btn btn-outline-dark active"
+                                    title="Select cursor">
+                                    <i class="fas fa-headphones"></i>
+                                </button>
+                                <button type="button" class="btn-shift btn btn-outline-dark"
+                                    title="Shift audio in time">
+                                    <i class="fas fa-arrows-alt-h" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn-select btn btn-outline-dark"
+                                    title="Select audio region">
+                                    <i class="fas fa-italic"></i>
+                                </button>
+                            </div>
+
+                            <div class="btn-group btn-select-state-group">
+                                <button type="button" class="btn-loop btn btn-outline-success disabled"
+                                    title="Loop a selected segment of audio">
+                                    <i class="fas fa-redo-alt"></i>
+                                </button>
+                            </div>
+                            <div id="download-mix-btn" class="btn-group" hidden>
+                                <button type="button" title="Download the current work as Wav file"
+                                    class="btn btn-download btn-outline-primary">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="playlist"></div>
+                    <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 right-0 p-3" style="right: 0; top: 0;">
+                        <div id="toastNotLoggedIn" class="toast"  data-autohide="false" style="display:none;">
+                            <div class="toast-header bg-warning">
+                                <strong class="mr-auto">WARNING</strong>
+                                <small>TRACK NOT SAVED</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="toast-body">
+                                You need first to <a href="./login.html"><b>register or login.</b></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 right-0 p-3" style="right: 0; top: 0;">
+                        <div id="toastNotPermission" class="toast"  data-autohide="false" style="display:none;">
+                            <div class="toast-header bg-warning">
+                                <strong class="mr-auto">WARNING</strong>
+                                <small>TRACK NOT SAVED</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="toast-body">
+                                You are not member of this composition.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="loading-data"></div> -->
+                    <div class="loader-container">
+                        <button id="loader" class="btn btn-primary" type="button" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading composition...
+                        </button>
+                    </div>
+                    <div class="playlist-bottom-bar input-group mb-3 hidden-first">
+                        <form>
+                            <div class="form-group">
+                                <div id="dropContainer" class="track-drop" hidden></div>
+                                <div id="upload-progress-bar-container"></div>
+                                <input type="file" id="fileInput" name="audio" class="form-control-file" multiple/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+    <div class="modal" id="testLatencyModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Test Latency</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Do you want to test the latency first?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="buttonNoTestLatency" class="btn btn-secondary">No</button>
+              <button type="button" id="buttonOkTestLatency" class="btn btn-primary">Yes</button>              
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal" id="testMicrophoneModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Test Microphone</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-danger" role="alert"><b>WARNING: </b>be careful when increasing the gain value as you may create loopback if you are not wearing headphones.</p>
+                <div class="form-group">
+                    <label for="gainSliderTestMic">Mic Input Gain: <output id="current-input-gain-test-mic"> 1</output></label>
+                    <input type="range" class="form-control-range" value="1" id="gainSliderTestMic" min="1" max="50" list="markers-test-mic">                   
+                </div>
+                <div class="wrapper-test-mic">
+                    <section class="main-controls-test-mic">
+                      <!-- <canvas class="visualizer-test-mic" height="100px"></canvas> -->
+                      <div class="volume-bar">
+                        <div class="volume-indicator" id="volume-indicator"></div>
+                      </div>
+                    </section>              
+                    <section class="sound-clips-test-mic"></section>              
+                  </div>
+                </div>            
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" id="bugReportModal" tabindex="-1" role="dialog" aria-labelledby="bugReportModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bugReportModalLabel">Bug Report</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This is a beta version of the Hi-Audio Online Platform. It is still under active development, more features and improvements are to come. You can report any issue you encounter or request a feature on the dedicated GitHub page by following the below link.</p>
+                    <a href="https://github.com/idsinge/hiaudio_webapp/issues" target="_blank">Report a Bug</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hi-audio-footer static-path="./static/" show-license show-fab-button></hi-audio-footer>
+    <script src="common/js/footer-component.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+    <script type="module" src="pages/composition/scripts/webdictaphone/webdictaphone.js"></script>
+    <script type="module" src="pages/composition/scripts/composition.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+/* https://codepen.io/jason-knight/pen/poWpLzJ?editors=1100 */
+/* https://css-tricks.com/a-clever-sticky-footer-technique/ */
+html,
+body {
+    height: 100%;
+}
+
+.bodyFooter {
+    position: sticky;
+    top: 100vh;
+    flex-grow: 0;
+    padding-bottom: 1rem;      
+}
+
+.footerMenu {
+    width: 90%;   
+}
+
+.footerMenu ul {
+    flex-grow: 0;
+}
+
+.footerMenu li {
+    display: inline;
+    margin-right: 0.8rem;
+}
+
+#companyName{    
+    padding-left: 2rem;
+    padding-bottom: 1rem;
+}

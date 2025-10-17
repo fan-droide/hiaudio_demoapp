@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hi-audio</title>
+    <meta name="description" content="hi-audio">
+    <link rel="icon" type="image/x-icon" href="common/img/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/d6bd427cae.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="common/css/loader.css">
+    <link rel="stylesheet" href="common/css/footer.css">
+    <link rel="stylesheet" href="common/css/badge.css">
+    <link rel="stylesheet" href="pages/home/styles/header.css">
+    <link rel="stylesheet" href="pages/home/styles/card.css">
+    <link rel="stylesheet" href="pages/home/styles/landingvideo.css">
+    <link rel="stylesheet" href="pages/home/styles/floatingmediaplayer.css">
+</head>
+
+<body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <a id="goHome" class="navbar-brand" href="">
+            <img id="mainLogo" alt="" height="36" src="https://hi-audio.imt.fr/wp-content/themes/tpt-hiaudio/assets/images/hi_audio.svg">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul id="userlogin" class="navbar-nav mr-auto">
+            </ul>
+            <ul id="useroptions" class="navbar-nav mr-auto" style="display:none;">
+                <li class="nav-item active">
+                    <a id="menuRight" class="nav-link" href="">hiaudio <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" hidden>
+                <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search"
+                    aria-label="Search">
+            </form>
+        </div>
+    </header>
+    <div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newsModalLabel"><b>News</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="jumbotron">
+                        <div class="container">
+                          <img alt="WAC25 banner" title="WAC25" src="https://wac-2025.ircam.fr/logo-200x200.png">
+                          <p><h5><b>9th WAC 2025 (10 years)</b></h5></p>
+                          <p>Short paper and poster presentation about round-trip latency estimation for online DAWs at <b>Web Audio Conference</b> 2025 at Ircam, Paris. From <i>19th to 21st of November.</i></p>
+                          <p><a href="https://wac-2025.ircam.fr" target="_blank">More info.</a></p>
+                        </div>
+                    </div>
+                    <div class="jumbotron">
+                        <div class="container">
+                          <h5><b>🎸 🎤  🎹  🎺  🥁  🎵  🎻</b></h5>
+                          <h5><b>Onsite Music Workshop</b></h5>
+                          <p>29th of April 2025 at Télécom Paris</p>
+                          <p><a href="https://hi-audio.imt.fr/agenda/29th-april-music-workshop/" target="_blank">More info.</a></p>
+                        </div>
+                    </div>
+                    <div class="jumbotron">
+                        <div class="container">
+                          <img alt="ISMIR24 logo" title="ISMIR24" src="https://confcats-siteplex.s3.us-east-1.amazonaws.com/ismir24/thumbnail_ISMIR_Logo_Final_Color_5_sm_1_5a160e7c16.png">
+                          <p><h5><b>ISMIR 2024</b></h5></p>
+                          <p>Late Breaking Demo (LBD) at 25th <b>International Society for Music Information Retrieval</b> (ISMIR) Conference. <i>November 10-14.</i></p>
+                          <p><a href="https://ismir2024program.ismir.net/lbd_448.html" target="_blank">More info.</a></p>
+                        </div>
+                    </div>
+                    <div class="jumbotron">
+                        <div class="container">
+                          <h5><b>Happy Birthday Collection</b></h5>
+                          <p><br>
+                            <video id="promo-video" width="100%" controls="controls" preload="none" playsinline="true" poster="static/videos/poster/birthday_poster.png">
+                                <source src="static/videos/video_promo_final.mp4" type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                          </p>
+                          <p>A collection of renditions of the famous tune played with different instruments and in various languages.</p>
+                          <p><a href="https://hiaudio.fr/index.html?collectionid=n5hoJCqxToAMAtKwFgBide" target="_blank">Check it out!</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="newMusicModal" tabindex="-1" aria-labelledby="newMusicModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newMusicModalLabel">Create new</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="container">
+                            <div class="row justify-center">
+                              <div class="mt-3">
+                                <div id="" class="input-group mb-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="newMusicTypeRadioButton" id="newMusicTypeRadioButton1" value="comp" checked>
+                                        <label class="form-check-label" for="newMusicTypeRadioButton1"><i class="fas fa-music"></i>&nbsp;Composition</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="newMusicTypeRadioButton" id="newMusicTypeRadioButton2" value="coll">
+                                        <label class="form-check-label" for="newMusicTypeRadioButton2"><i class="fas fa-folder"></i>&nbsp;Collection</label>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newtitle">Title:</label>
+                        <div class="container">
+                            <div class="row justify-center">
+                                <div class="form-outline w-75">
+                                    <input class="form-control" type="text" id="newtitle" placeholder="new title" title="newtitle">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newdescription">Description:</label>
+                        <div class="container">
+                            <div class="row justify-center">
+                                <div class="input-group">
+                                    <textarea class="form-control" id="newdescription" rows="2" placeholder="new description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="" for="listCompCollsFormControl">Select parent collection:</label>
+                        <div class="container">
+                            <div class="row justify-center">
+                              <div class="">
+                                <div id="listCollContainer" class="input-group mb-3"></div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newMusicFormControl">Level of Privacy:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="newMusicPrivacyRadios" id="newMusicPrivacyRadios1" value="1" checked>
+                            <label class="form-check-label" for="newMusicPrivacyRadios1">
+                              Public
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="newMusicPrivacyRadios" id="newMusicPrivacyRadios2" value="2">
+                            <label class="form-check-label" for="newMusicPrivacyRadios2">
+                              Only registered users
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="newMusicPrivacyRadios" id="newMusicPrivacyRadios3" value="3">
+                            <label class="form-check-label" for="newMusicPrivacyRadios3">
+                              Private
+                            </label>
+                          </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="newcreation" type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editCollectionsModal" tabindex="-1" aria-labelledby="editCollectionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button id="editmycollectionsbutton" type="button" class="btn btn-primary">Edit</button>
+                    <h5 class="modal-title w-100" id="editCollectionsModalLabel">My Collections</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul id="listCollContainerAllColl" class="list-group"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav aria-label="breadcrumb">
+        <ol id="breadcrumbnavbar" class="breadcrumb">
+        </ol>
+    </nav>
+    <div class="d-flex justify-content-center">
+        <div id="welcomecontainer" class="mx-auto"></div>
+    </div>
+    <div id="initialmessage" class="justify-content-center jumbotron bg-white" hidden>
+        <div class="col-sm-6">
+            <h1 class="display-4">Hi, world!</h1>
+            <hr class="my-4">
+            <p class="lead">This space looks quite silent, why don't we make it &#127927; &#127911; &#127929; &#127925; &#127908; ... sound!</p>
+            <p>Click on the button and let the magic happens.</p>
+        <a class="btn btn-info btn-lg" id="createNewButtonAtHome" href="#" role="button" data-toggle="modal" data-target="#newMusicModal">New Music</a>
+        </div>
+    </div>
+    <div id="legendbuttons" class="legendbuttons"></div>
+    <ul id="grid" class="listing"></ul>
+    <div class="loader-container">
+        <button id="loader" class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+    </div>
+    <hi-audio-footer static-path="./static/"></hi-audio-footer>
+    <script src="common/js/footer-component.js"></script>
+    <main id="sticky-player" class="sticky-container" hidden>
+        <div class="audio-player">
+            <div class="player-body">
+                <p class="player-header d-flex align-items-center justify-content-between">
+                    <span id="playfloatingbutton">
+                        <i class="fas fa-play"></i>
+                    </span>
+                    <span id="current-play-info" class="track_comp_info text-truncate flex-grow-1 mx-2">Loading track ...</span>
+                    <span class="chevron-collapse ml-auto" data-toggle="collapse" data-target="#waveform" aria-expanded="true">
+                        <i class="fas fa-chevron-down pull-right"></i>
+                        <i class="fas fa-chevron-up pull-right"></i>
+                    </span>
+                </p>
+                <div id="waveform" class="waveform collapse show"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/wavesurfer.js@7.8.15"></script>
+    <script src="common/js/search.js"></script>
+    <script type="module" src="pages/home/scripts/newcreation.js"></script>
+</body>
+</html>

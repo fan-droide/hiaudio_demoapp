@@ -1,0 +1,122 @@
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 100%;
+    border-radius: 5px;
+}
+
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 355px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+
+    .card {
+        width: 90%;
+    }
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-url {
+    color: #006494;
+    text-decoration: none;
+}
+
+.card-header-url {
+    color: #ffffff;
+    text-decoration: underline;
+}
+.card-header-url:hover {
+    color: #2a468e;
+}
+
+.card-text {
+    color: #565e67;
+}
+
+.listing {
+    padding: 0;
+    list-style: none;
+    margin: 2em;
+    display: grid;
+    grid-gap: 20px;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.listing .body {
+    padding: 10px;
+}
+
+.list-group {
+    max-height: 200px;
+    margin-bottom: 10px;
+    overflow-y: scroll;
+}
+
+.legendbuttons {
+    padding-top: 2em;
+    padding-right: 1em;
+}
+
+.legenditem {
+    padding-right: 1em;
+}
+
+.badge-collection {
+    color: white;
+    background-color: #c485e9;
+}
+
+.border-collection {
+    border-color: #c485e9;
+}
+
+.badge-collab {
+    color: white;
+    background-color: #e9858a;
+}
+
+.badge-template {
+    color: white;
+    background-color: #e06b3c;
+}
+
+.border-collab {
+    border-color: #e9858a;
+}
+
+#listCollContainerAllColl {
+    max-height: 70vh;
+}
+
+.badge-warning {
+    color: white;
+}
+
+#infocontainer {
+    margin-top: 2em;
+}
+
+.hidden-first {
+    visibility: hidden;
+    animation: 5s fadeIn;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.play-control-card{
+    cursor: pointer;
+}

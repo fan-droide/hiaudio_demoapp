@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hi-audio / profile</title>
+    <meta name="description" content="hi-audio / profile">
+    <link rel="icon" type="image/x-icon" href="common/img/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/d6bd427cae.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="common/css/loader.css">
+    <link rel="stylesheet" href="common/css/footer.css">
+    <link rel="stylesheet" href="pages/profile/user.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <ol class="breadcrumb">
+            <li>
+                <a id="goHome" href="">
+                    <img id="mainLogo" alt="" height="36" src="https://hi-audio.imt.fr/wp-content/themes/tpt-hiaudio/assets/images/hi_audio.svg">
+                </a>
+            </li>
+        </ol>
+    </header>
+    <main>
+        <div id="profilecard" class="profile-card" hidden>
+            <img id="profilepicture" class="hidden-first" src="./common/img/agp.png" alt="User Picture" width="200" height="200">
+            <hr class="hr" />     
+            <div class="form-group">
+                <h6><b>Username:</b></h6>               
+                <input type="text" class="form-control mr-2" id='usernameinputfield' placeholder="" readonly/>                
+                <button id="editusernamebutton" type="button" class="btn btn-sm">
+                    <i class="fas fa-edit">&nbsp;</i>Edit username
+                </button>
+                <div id="validationusernameresult" class="mt-3 invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="userid"><b>User ID:</b></label>
+                <h6 id="userid"></h6>
+            </div>
+            
+            <p id="emailaddress" class="user-title"></p>
+            <p>
+                <form action="/logout">
+                    <button class="button-profile logout" type="submit">Logout</button>
+                </form>
+            </p>
+            <button type="button" id="button-deleteprofile" class="btn btn-outline-danger btn-lg btn-block">DELETE PROFILE</button>
+        </div>
+        <details id="apicard" class="apicard" hidden >
+            <summary>API Usage</summary>
+            <br />
+            <p>
+            To use the plaftorm via the web interface, the authentifiaction is done using cookies.<br />
+            To use the API via scripts or command line tools, you must include your token as a bearer token in the <code>Authorization</code> http header. For more information about the type of token used, see <a href="https://jwt.io/introduction/" target="_blank">https://jwt.io/introduction</a>
+            </p>
+            <p>
+                Your access token is:
+                <code id='apitoken'>{{token}}</code>
+                <p>
+                    <button id="copytokenbutton" class="btn btn btn-outline-primary btn-sm btn-block">Copy to clipboard</button>
+                </p>
+            </p>
+            <h5><b>curl</b></h5>
+            Here is an example of an API call using curl to retreive your use profile: <br />
+            <div><code id="curlcode" class="curlcode"></code></div>
+
+
+        </details>
+        <div id="logincard" class="profile-card" hidden>
+            <form action="/login.html">
+                <button type="submit" class="button-profile btn btn-info">Login</button>
+            </form>
+        </div>
+    </main>
+    <div class="loader-container">
+        <button id="loader" class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+        </button>
+    </div>
+    <hi-audio-footer static-path="./static/"></hi-audio-footer>
+    <script src="common/js/footer-component.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+    <script type="module" src="pages/profile/user.js"></script>
+</body>
+
+</html>

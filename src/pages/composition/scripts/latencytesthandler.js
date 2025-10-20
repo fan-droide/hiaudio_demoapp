@@ -1,6 +1,4 @@
 import { TestLatencyMLS } from './latencymls/test'
-import { TestLatScriptProc } from './latencymeasure/testlatency'
-import { TestLatRingBuf } from './latencyadenot/testlatency'
 import DynamicModal from '../../../common/js/modaldialog'
 import detectBrowser from '../../../common/js/detect-browser.js'
 import { playlist, MIC_ERROR, displayMicErrorPopUp } from './composition'
@@ -30,15 +28,6 @@ export const triggerTestLatencyButton = () => {
   </li>`}
 
 let active_lat_test = {mls:true,ringbuf:false,scrptprc:false}
-
-const testLatFinishCallback = () => {
-    if (active_lat_test.ringbuf && TestLatRingBuf.running) {
-        TestLatRingBuf.stopTest()
-    }
-    if (active_lat_test.scrptprc && TestLatScriptProc.startbutton.innerText === 'STOP') {
-        TestLatScriptProc.finishTest()
-    }
-}
 
 const latencyWarningModal = `<div class="modal fade" id="latencyTestWarning" tabindex="-1" aria-labelledby="latencyTestWarningLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -105,19 +94,15 @@ const openLatencyTestDialog = (stream) => {
         'Close',
         'Latency Test',
         'bg-success',
-        testLatFinishCallback
+        null
     )
     manualSetLatencyHandler()
     
     if (!latencyTestInitialized) {
         latencyTestInitialized = true
         active_lat_test.mls && TestLatencyMLS.initialize(playlist.ac, stream, TEST_LAT_MLS_BTN_ID, debugCanvas, browserId)
-        active_lat_test.ringbuf && TestLatRingBuf.initialize(playlist.ac, stream)
-        active_lat_test.scrptprc && TestLatScriptProc.initialize(playlist.ac)
     } else {
         active_lat_test.mls && TestLatencyMLS.displayStart()
-        active_lat_test.ringbuf && TestLatRingBuf.buttonHandlers()
-        active_lat_test.scrptprc && TestLatScriptProc.displayStart()
     }
 }
 
@@ -137,9 +122,6 @@ const enableWakeLock = async() => {
 
 export const triggerLatencyTestHandler = (stream) => {
     console.log(browserId)
-    if(browserId.os === 'ipad' || browserId.os === 'iphone' || browserId.browser === 'safari') {
-        active_lat_test.ringbuf = false
-    }
     document.getElementById('trigger-lat-test-btn').onclick =  async() => {
         if(!MIC_ERROR){
             if(wakeLock === null){
